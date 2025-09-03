@@ -1,7 +1,6 @@
 const express = require('express');
-const db = require('./db/ConnectDb.js');
-const router = require('./routers/Hospital.js');
-const cors = require("cors")
+const cors = require("cors");
+const auth_router = require('./routers/Auth.js');
 
 const app = express();
 const PORT = 4000;
@@ -12,7 +11,7 @@ app.use(cors({
     origin: "*"
 }))
 
-app.use('/api/hospital', router)
+app.use('/api/auth', auth_router)
 
 app.listen(PORT, () => {
     console.log(`Server is listening at ${PORT}`);

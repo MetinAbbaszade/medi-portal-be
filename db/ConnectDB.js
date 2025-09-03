@@ -18,4 +18,4 @@ function connectDB() {
 
 const mysqlDb = connectDB()
 
-module.exports = mysqlDb;
+module.exports = { mysqlDb };
