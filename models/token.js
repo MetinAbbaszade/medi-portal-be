@@ -40,7 +40,6 @@ async function generateAccessToken(user_info) {
             }
         }
         delete payload.role_id;
-        console.log(payload);
         return jwt.sign(payload, JWT_SECRET)
     } catch (error) {
         throw error;
