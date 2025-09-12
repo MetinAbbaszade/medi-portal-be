@@ -3,7 +3,33 @@ const { getAllHospitals } = require('../controllers/HospitalController')
 
 const router = express.Router()
 
-router.get('/', getAllHospitals)
+/**
+ * @swagger
+ * /api/hospital:
+ *   get:
+ *     tags:
+ *       - Hospital
+ *     summary: Get all hospitals
+ *     description: Retrieve a list of hospitals. You can add optional query parameters to filter results.
+ *     parameters:
+ *       - in: query
+ *         name: City
+ *         schema:
+ *           type: string
+ *         description: Filter hospitals by city
+ *       - in: query
+ *         name: Specialty
+ *         schema:
+ *           type: string
+ *         description: Filter hospitals by specialty
+ *     responses:
+ *       200:
+ *         description: All hospitals returned successfully
+ *       400:
+ *         description: Bad Request
+ *       500:
+ *         description: Server error
+ */
+router.get('/', getAllHospitals);
 
-
-module.exports = router
+module.exports = router;
