@@ -16,17 +16,14 @@ const router = express.Router()
  *         name: Name
  *         schema:
  *           type: string
- *         description: Filter hospitals by name
  *       - in: query
  *         name: SpecialtyId
  *         schema:
  *           type: string
- *         description: Filter hospitals by specialtyId
  *       - in: query
  *         name: Filter
  *         schema:
  *           type: string
- *         description: Filter hospitals
  *     responses:
  *       200:
  *         description: All hospitals returned successfully
