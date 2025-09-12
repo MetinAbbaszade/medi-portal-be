@@ -32,6 +32,8 @@ const router = express.Router()
  *         description: Login successful
  *       401:
  *         description: Invalid credentials
+ *       500:
+ *         description: Server problem
  */
 router.post('/login', login)
 
@@ -51,12 +53,16 @@ router.post('/login', login)
  *             type: object
  *             required:
  *               - name
+ *               - surname
  *               - email
  *               - password
  *             properties:
  *               name:
  *                 type: string
- *                 example: John Doe
+ *                 example: John
+ *               surname:
+ *                 type: string
+ *                 example: Doe
  *               email:
  *                 type: string
  *                 example: john@example.com
@@ -66,8 +72,8 @@ router.post('/login', login)
  *     responses:
  *       201:
  *         description: User registered successfully
- *       400:
- *         description: Bad request
+ *       500:
+ *         description: Server problem
  */
 router.post('/register', register)
 
