@@ -1,7 +1,7 @@
 const { mysqlDb: db } = require("../db/ConnectDB")
 
 async function getAllHospitals(req, res) {
-    // console.log(req.query.Specialty)
+    console.log(req.query)
     try {
         [hospitals] = await db
             .promise()

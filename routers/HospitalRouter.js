@@ -13,15 +13,20 @@ const router = express.Router()
  *     description: Retrieve a list of hospitals. You can add optional query parameters to filter results.
  *     parameters:
  *       - in: query
- *         name: City
+ *         name: Name
  *         schema:
  *           type: string
- *         description: Filter hospitals by city
+ *         description: Filter hospitals by name
  *       - in: query
- *         name: Specialty
+ *         name: SpecialtyId
  *         schema:
  *           type: string
- *         description: Filter hospitals by specialty
+ *         description: Filter hospitals by specialtyId
+ *       - in: query
+ *         name: Filter
+ *         schema:
+ *           type: string
+ *         description: Filter hospitals
  *     responses:
  *       200:
  *         description: All hospitals returned successfully
