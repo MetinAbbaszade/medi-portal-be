@@ -1,7 +1,8 @@
-const { mysqlDb: db } = require("../db/ConnectDB")
+const { mysqlDb: db } = require("../db/ConnectDB");
+const { filterHospitals } = require("../models/hospital");
 
 async function getAllHospitals(req, res) {
-    console.log(req.query)
+    let filteredHospitals = [];
     try {
         [hospitals] = await db
             .promise()
@@ -58,16 +59,18 @@ async function getAllHospitals(req, res) {
 		JOIN hospitals h ON h.id = hs.hospital_id
         JOIN specialties s ON s.id = hs.specialty_id
         WHERE h.id= ?
-                `, hospital.id)
+                `, [hospital.id])
 
 
             hospital.adresses = adress;
             hospital.capacities = capacities;
             hospital.contacts = contacts;
-            hospital.departments = departments;
+            hospital.departments = departments
             hospital.specialties = specialties;
         }
-        res.json({ hospitals });
+
+        filteredHospitals = Object.keys(req.query).length !== 0 ? await filterHospitals(req.query, hospitals) : hospitals;
+        res.json({ filteredHospitals });
     } catch (error) {
         res.status(500).json({ message: error });
     }
