@@ -1,4 +1,4 @@
-async function filterHospitals(query, hospitals) {
+function filterHospitals(query, hospitals) {
     if (query.Name) {
         hospitals = hospitals.filter(({ name }) => name.toLowerCase().includes(query.Name.toLowerCase()))
     }

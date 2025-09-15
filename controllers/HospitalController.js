@@ -69,7 +69,7 @@ async function getAllHospitals(req, res) {
             hospital.specialties = specialties;
         }
 
-        filteredHospitals = Object.keys(req.query).length !== 0 ? await filterHospitals(req.query, hospitals) : hospitals;
+        filteredHospitals = Object.keys(req.query).length !== 0 ? filterHospitals(req.query, hospitals) : hospitals;
         res.json({ filteredHospitals });
     } catch (error) {
         res.status(500).json({ message: error });
