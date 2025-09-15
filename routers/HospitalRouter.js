@@ -1,5 +1,5 @@
 const express = require('express')
-const { getAllHospitals } = require('../controllers/HospitalController')
+const { getAllHospitals, getHospitalByDepartmentId } = require('../controllers/HospitalController')
 
 const router = express.Router()
 
@@ -26,12 +26,56 @@ const router = express.Router()
  *           type: string
  *     responses:
  *       200:
- *         description: All hospitals returned successfully
+ *         description: Hospitals returned successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 filteredHospitals:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Hospital'
  *       400:
  *         description: Bad Request
  *       500:
  *         description: Server error
  */
 router.get('/', getAllHospitals);
+
+
+/**
+ * @swagger
+ * /api/hospital/{id}:
+ *   get:
+ *     tags:
+ *       - Hospital
+ *     summary: Get hospital by department ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Hospital returned successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 hospital:
+ *                   $ref: '#/components/schemas/Hospital'
+ *       400:
+ *         description: Bad Request
+ *       404:
+ *         description: Hospital not found
+ *       500:
+ *         description: Server Error
+ */
+router.get('/:id', getHospitalByDepartmentId);
+
+
 
 module.exports = router;
