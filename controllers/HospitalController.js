@@ -1,5 +1,5 @@
 const { mysqlDb: db } = require("../db/ConnectDB");
-const { filterHospitals, fetchAllHospitals, fetchHospitalsByDepartmentId } = require("../models/hospital");
+const { filterHospitals, fetchAllHospitals, fetchHospitalsByDepartmentId } = require("../services/hospital");
 
 async function getAllHospitals(req, res) {
     let filteredHospitals = [], hospitals = [];

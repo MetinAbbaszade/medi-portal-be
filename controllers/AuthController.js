@@ -1,6 +1,6 @@
 const { mysqlDb: db } = require('../db/ConnectDB')
 const uuid = require('uuid');
-const { generateAccessToken } = require('../models/token');
+const { generateAccessToken } = require('../services/token');
 
 async function login(req, res) {
     const { email, password } = req.body
