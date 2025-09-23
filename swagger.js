@@ -8,6 +8,13 @@ const swaggerDefinition = {
         description: "API documentation for MediPortal",
     },
     components: {
+        securitySchemes: {
+            bearerAuth: {
+                type: 'http',
+                scheme: 'bearer',
+                bearerFormat: 'JWT',
+            },
+        },
         schemas: {
             Hospital: {
                 type: "object",
@@ -81,7 +88,7 @@ const swaggerDefinition = {
 
 const options = {
     definition: swaggerDefinition,
-    apis: ["./routers/*.js"],     
+    apis: ["./routers/*.js"],
 };
 
 const swaggerSpec = swaggerJSDoc(options);

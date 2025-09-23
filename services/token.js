@@ -46,5 +46,16 @@ async function generateAccessToken(user_info) {
     }
 }
 
+async function decodeToken(token) {
+    try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+        return decoded;
+    } catch (err) {
+        console.error("JWT verification failed:", err.message);
+        throw new Error("Invalid or expired token");
+    }
+}
 
-module.exports = { generateAccessToken };
+
+
+module.exports = { generateAccessToken, decodeToken };

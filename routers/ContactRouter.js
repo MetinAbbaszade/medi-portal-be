@@ -34,7 +34,7 @@ const router = express.Router()
  *                 example: I have objection to you
  *     responses:
  *       200:
- *         description: Login successful
+ *         description: Added successfully
  *       401:
  *         description: Invalid credentials
  *       500:

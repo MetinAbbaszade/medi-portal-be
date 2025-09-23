@@ -8,6 +8,7 @@ const hospital_router = require('./routers/HospitalRouter.js');
 const contact_router = require('./routers/ContactRouter.js');
 const department_router = require('./routers/Department.js');
 const doctor_router = require('./routers/DoctorRouter.js');
+const appointment_router = require('./routers/Appointment.js')
 
 
 
@@ -27,8 +28,8 @@ app.use('/api/hospital', hospital_router);
 app.use('/api/contact', contact_router);
 app.use('/api/departments', department_router);
 app.use('/api/doctors', doctor_router);
+app.use('/api/appointments', appointment_router);
 
 app.listen(PORT, () => {
     console.log(`Server is listening at ${PORT}`);
 })
-
