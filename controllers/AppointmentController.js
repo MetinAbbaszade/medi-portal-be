@@ -10,7 +10,6 @@ async function addNewAppointment(req, res) {
         const token = authHeader && authHeader.startsWith("Bearer ")
             ? authHeader.slice(7)
             : null;
-
         if (!token) {
             res.status(401).json({ message: "I don't know who u are:D" })
         }
@@ -33,7 +32,7 @@ async function addNewAppointment(req, res) {
 
         res.status(201).json(payload);
     } catch (error) {
-        console.log("Salam")
+        console.log(error)
     }
 }
 
