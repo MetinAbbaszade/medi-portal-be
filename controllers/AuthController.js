@@ -28,8 +28,7 @@ async function login(req, res) {
 async function register({ body }, res) {
     const payload = {
         ...body,
-        id: uuid.v4(),
-        role_id: 1
+        id: uuid.v4()
     };
     const columns = Object.keys(payload).join(', ');
     const placeholders = Object.keys(payload).map(() => "?").join(", ");
@@ -39,6 +38,10 @@ async function register({ body }, res) {
             .promise()
             .query(`INSERT INTO users (${columns}) VALUES (${placeholders})`, [...Object.values(payload)]);
 
+        await db
+            .promise()
+            .query(`INSERT INTO user_roles (user_id, role_id) VALUES (?, ?)`, [payload.id, 5])
+            
         const token = await generateAccessToken(payload);
         res.status(201).json({ token })
     } catch (error) {
