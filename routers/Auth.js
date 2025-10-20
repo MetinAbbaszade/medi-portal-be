@@ -26,7 +26,7 @@ const router = express.Router()
  *                 example: metinabbaszade@yahoo.com
  *               password:
  *                 type: string
- *                 example: 123456
+ *                 example: metin123
  *     responses:
  *       200:
  *         description: Login successful

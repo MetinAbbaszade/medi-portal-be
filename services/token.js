@@ -4,7 +4,6 @@ const { mysqlDb: db } = require('../db/ConnectDB');
 const JWT_SECRET = 'superunbelieveblecannotfindthissecretkey';
 
 async function generateAccessToken(user_info) {
-    console.log(user_info);
     try {
 
         const [[role]] = await db

@@ -1,23 +1,26 @@
 const { mysqlDb: db } = require('../db/ConnectDB')
 const uuid = require('uuid');
 const { generateAccessToken } = require('../services/token');
+const bcrypt = require('bcrypt');
 
 async function login(req, res) {
-    const { email, password } = req.body
+    const { email, password } = req.body;
 
     try {
         const [users] = await db
             .promise()
-            .query('SELECT * FROM users WHERE email = ?', [email])
+            .query('SELECT * FROM users WHERE email = ?', [email]);
 
-        if (!users.length) return res.status(401).json({ message: 'Invalid email or password' });
+        if (!users.length)
+            return res.status(401).json({ message: 'Invalid email or password' });
 
         const user = users[0];
 
-        if (user.password !== password) return res.status(401).json({ message: 'Invalid email or password' });
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch)
+            return res.status(401).json({ message: 'Invalid email or password' });
 
         const token = await generateAccessToken(user);
-
         res.json({ token });
     } catch (error) {
         console.error(error);
@@ -25,24 +28,36 @@ async function login(req, res) {
     }
 }
 
+
 async function register({ body }, res) {
-    const payload = {
-        ...body,
-        id: uuid.v4(),
-        role_id: 1
-    };
-    const columns = Object.keys(payload).join(', ');
-    const placeholders = Object.keys(payload).map(() => "?").join(", ");
+    const saltRounds = 10;
 
     try {
+        const salt = await bcrypt.genSalt(saltRounds);
+        const hashedPassword = await bcrypt.hash(body.password, salt);
+
+        const payload = {
+            ...body,
+            id: uuid.v4(),
+            role_id: 1,
+            password: hashedPassword,
+        };
+
+        const columns = Object.keys(payload).join(", ");
+        const placeholders = Object.keys(payload).map(() => "?").join(", ");
+
         await db
             .promise()
-            .query(`INSERT INTO users (${columns}) VALUES (${placeholders})`, [...Object.values(payload)]);
+            .query(
+                `INSERT INTO users (${columns}) VALUES (${placeholders})`,
+                Object.values(payload)
+            );
 
         const token = await generateAccessToken(payload);
-        res.status(201).json({ token })
+        res.status(201).json({ token });
     } catch (error) {
-        res.status(500).send(error)
+        console.error("Registration error:", error);
+        res.status(500).send(error);
     }
 }
 
