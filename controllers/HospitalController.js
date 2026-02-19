@@ -1,5 +1,5 @@
-const { mysqlDb: db } = require("../db/ConnectDB");
-const { filterHospitals, fetchAllHospitals, fetchHospitalsByDepartmentId } = require("../services/hospital");
+// const { mysqlDb: db } = require("../db/ConnectDB");
+const { filterHospitals, fetchAllHospitals, fetchHospitalsByDepartmentId, fetchHospitalByHospitalId, updateHospitalService } = require("../services/hospital");
 
 async function getAllHospitals(req, res) {
     let filteredHospitals = [], hospitals = [];
@@ -23,8 +23,28 @@ async function getHospitalByDepartmentId(req, res) {
         res.status(500).send({ message: error });
     }
 }
+async function updateHospital({ body, params }, res) {
+    const { id } = params;
+
+    try {
+        const updatedHospital = await updateHospitalService(id, body);
+
+        return res.status(200).json({
+            message: "Hospital updated successfully",
+            hospital: updatedHospital,
+        });
+    } catch (error) {
+        console.error(error);
+
+        return res.status(error.status || 500).json({
+            message: error.message || "Server error",
+        });
+    }
+}
+
 
 module.exports = {
     getAllHospitals,
-    getHospitalByDepartmentId
+    getHospitalByDepartmentId,
+    updateHospital
 }

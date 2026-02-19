@@ -1,5 +1,5 @@
 const express = require('express')
-const { getAllHospitals, getHospitalByDepartmentId } = require('../controllers/HospitalController')
+const { getAllHospitals, getHospitalByDepartmentId, updateHospital } = require('../controllers/HospitalController')
 
 const router = express.Router()
 
@@ -75,6 +75,96 @@ router.get('/', getAllHospitals);
  *         description: Server Error
  */
 router.get('/:id', getHospitalByDepartmentId);
+
+/**
+ * @swagger
+ * /api/hospital/{id}:
+ *   put:
+ *     tags:
+ *       - Hospital
+ *     summary: Update hospital by ID
+ *     description: Update hospital details (including contacts, capacities, and addresses) by hospital ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Hospital ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: City Central Hospital
+ *               type:
+ *                 type: string
+ *                 example: Public
+ *               description:
+ *                 type: string
+ *                 example: Multi-specialty hospital with 24/7 emergency services.
+ *               contacts:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     phone:
+ *                       type: string
+ *                       example: "+994501234567"
+ *                     email:
+ *                       type: string
+ *                       example: "info@hospital.az"
+ *                     website:
+ *                       type: string
+ *                       example: "https://hospital.az"
+ *               capacities:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     beds:
+ *                       type: integer
+ *                       example: 200
+ *                     icu_beds:
+ *                       type: integer
+ *                       example: 20
+ *                     emergency_capacity:
+ *                       type: integer
+ *                       example: 50
+ *               adresses:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     street:
+ *                       type: string
+ *                       example: "Nizami St 10"
+ *                     city:
+ *                       type: string
+ *                       example: "Baku"
+ *                     state:
+ *                       type: string
+ *                       example: "Absheron"
+ *                     zip:
+ *                       type: string
+ *                       example: "AZ1000"
+ *                     country:
+ *                       type: string
+ *                       example: "Nasimi"
+ *             required:
+ *               - name
+ *       400:
+ *         description: Bad Request
+ *       404:
+ *         description: Hospital not found
+ *       500:
+ *         description: Server Error
+ */
+router.put('/:id', updateHospital)
 
 
 
